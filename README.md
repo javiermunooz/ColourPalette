@@ -9,7 +9,7 @@ _ColourPalette applies KMeans algorithm on a picture in order to extract its mos
 _Naturally, first thing you need to do is cloning this repository!_
 
 ```
-git clone 
+git clone https://github.com/javiermunooz/ColourPalette.git
 cd ColourPalette
 ```
 
