@@ -6,7 +6,7 @@ _ColourPalette applies KMeans algorithm on a picture in order to extract its mos
 
 ## How to start 🚀
 
-_Naturally, first thing you need to do is cloning this repository!_
+_Naturally, first thing you need to do is clone this repository!_
 
 ```
 git clone https://github.com/javiermunooz/ColourPalette.git
@@ -23,7 +23,7 @@ _You will need Python 3.6.8 or later. This application has only been tested on W
 
 ### Installation 🔧
 
-_I recommend setting up a Python virtual environment in order to run this application without interfering with your current Python environment_
+_I would recommend that you set up a Python virtual environment in order to run this application without interfering with your current Python environment_
 
 _Execute the following commands_
 
