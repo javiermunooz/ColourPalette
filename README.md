@@ -49,6 +49,18 @@ _You will simply need to launch the app.py file_
 python app.py
 ```
 
+_In case you want to build your own application, here is an example of how to use ColourPalete:_
+
+```
+cp = ColourPalette(path='my_image.jpg', n_clusters=5)
+
+# Gets a n-colours palette
+codes, counts = cp.colour_palette()
+
+# Gets the most frequent colour in your picture
+peak, colour = cp.most_common()
+```
+
 ### License 📄
 
 _This project was built under MIT license, which basically means do whatever you want but don't forget to credit the original author! A short @javiermunooz will do the trick._
