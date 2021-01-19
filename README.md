@@ -1,6 +1,6 @@
 # Colour Palette
 
-_This simple Python-Tkinter app allows you to select a picture from your local file system and display an associated 6-colour palette. You can also make use of the ColourPalette module as an API for your own applications._
+_This simple Python-Tkinter app allows you to select a picture from your local file system and display an associated 6-colour palette. You can also make use of the ColourPalette module as an API for your own application._
 
 _ColourPalette applies KMeans algorithm on a picture in order to extract its most relevant colours._
 
@@ -54,7 +54,7 @@ _In case you want to build your own application, here is an example of how to us
 ```
 cp = ColourPalette(path='my_image.jpg', n_clusters=5)
 
-# Gets a n-colours palette
+# Gets a N-colour palette
 codes, counts = cp.colour_palette()
 
 # Gets the most frequent colour in your picture
