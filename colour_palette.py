@@ -18,17 +18,18 @@
 '''
 
 import binascii
-from PIL import Image
-import numpy as np
-from sklearn.cluster import KMeans
-import scipy.misc
-import operator
-import scipy.cluster
-import os
 import errno
 import imghdr
-import instaloader
 from itertools import islice
+import operator
+import os
+
+import instaloader
+import numpy as np
+from PIL import Image
+import scipy.cluster
+import scipy.misc
+from sklearn.cluster import KMeans
 
 class ColourPalette:
     
@@ -145,8 +146,3 @@ class ColourPalette:
         counts = np.sort(counts)[::-1]
             
         return codes, counts
-    
-    
-cp = ColourPalette(path='Z:/ciaraswalsh', num_clusters=6)
-codes, counts = cp.colour_palette()
-print(codes)

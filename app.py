@@ -18,11 +18,13 @@
     4. ¡You got your palette!
 '''
 
-import tkinter as tk
-from colour_palette import ColourPalette
-from tkinter import filedialog
 from tkinter import Canvas
+from tkinter import filedialog
+import tkinter as tk
+
 from PIL import ImageTk, Image
+
+from colour_palette import ColourPalette
 
 class MainApplication(object):
     def __init__(self, master, *args, **kwargs):
