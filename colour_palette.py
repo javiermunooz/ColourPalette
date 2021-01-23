@@ -13,7 +13,7 @@
     
     @usage:
     
-    cp = ColourPalette(path='my_image.jpg', n_clusters=5)
+    cp = ColourPalette(path='my_image.jpg', num_clusters=5)
     codes, counts = cp.colour_palette()
 '''
 
@@ -24,6 +24,10 @@ from sklearn.cluster import KMeans
 import scipy.misc
 import operator
 import scipy.cluster
+import os
+import errno
+import imghdr
+import instaloader
 
 class ColourPalette:
     
@@ -33,10 +37,14 @@ class ColourPalette:
         self.path = path
         self.num_clusters = num_clusters
         
-    def _read_image(self):
+    def _read_image(self, img=None):
         ''' Reads and reshapes an image
         '''
-        im = Image.open(self.path)
+        if img is None:
+            path = self.path
+        else:
+            path = img
+        im = Image.open(path)
         im = im.resize((150,150)) # Improves efficiency
         ar = np.asarray(im)
         shape = ar.shape
@@ -46,7 +54,40 @@ class ColourPalette:
     def _clusterize(self, num_clusters=5):
         ''' KMeans clustering to reduce the number of colours to num_clusters
         '''
-        ar = self._read_image()
+        start = True
+        
+        ''' Checks if the provided path is a directory or a file
+        If it is a directory, all images are processed
+        '''
+        if os.path.isdir(self.path):
+            for img in os.listdir(self.path):
+                img = os.path.join(self.path,img)
+                
+                # Check if it is a proper image
+                if imghdr.what(img) not in ['jpg', 'jpeg', 'png']:
+                    continue
+                
+                ar_prov = self._read_image(img=img)
+                
+                if start:
+                    # Initializing the multiple-image array
+                    ar = ar_prov
+                    start = False
+                else:
+                    # Concatenate all images
+                    ar = np.concatenate((ar, ar_prov), axis=0)
+                    
+        elif os.path.isfile(self.path):
+            # Check if file is a valid image
+            if imghdr.what(self.path) not in ['jpg', 'jpeg', 'png']:
+                raise Exception(self.path + 'is not a valid image!')
+            
+            ar = self._read_image()
+        else:
+            # Raising an error in case such file was not found
+            raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), self.path)
+        
+        # Clustering images by colour
         codes, dist = scipy.cluster.vq.kmeans(ar, self.num_clusters)
         vecs, dist = scipy.cluster.vq.vq(ar, codes)
         counts, bins = np.histogram(vecs, len(codes))
