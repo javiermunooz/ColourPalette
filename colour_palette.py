@@ -28,14 +28,44 @@ import os
 import errno
 import imghdr
 import instaloader
+from itertools import islice
 
 class ColourPalette:
     
-    def __init__(self, path, num_clusters=5):
+    def __init__(self, path, num_clusters=5, instagram=False, user=None, password=None, num_images=9):
         ''' Constructor
         '''
         self.path = path
         self.num_clusters = num_clusters
+        self.instagram = instagram
+        self.user = user
+        self.password = password
+        self.num_images = num_images
+        
+    def _from_instagram(self):
+        ''' Downloads [num_images] latest images from an instagram profile.
+        User and password may be needed to download pictures from private profiles.
+        '''
+        if not self.instagram:
+            raise Exception("_from_instagram() cannot be invoked with current context. Set instagram=True.")
+        
+        # Get instance
+        L = instaloader.Instaloader(save_metadata=False, download_comments=False, post_metadata_txt_pattern="")
+        
+        # If credentials were provided, login to Instagram
+        if self.user is not None and self.password is not None:
+            L.login(self.user, self.password)
+        
+        # Creates a profile object for the specified target
+        profile = instaloader.Profile.from_username(L.context, self.path)
+        
+        # Adjusting the number of downloadable images
+        post_iter = profile.get_posts()
+        
+        # Downloading only [num_images] images
+        self.path = "tmp"
+        for post in islice(post_iter, self.num_images):
+            L.download_post(post, "tmp")
         
     def _read_image(self, img=None):
         ''' Reads and reshapes an image
@@ -44,6 +74,7 @@ class ColourPalette:
             path = self.path
         else:
             path = img
+            
         im = Image.open(path)
         im = im.resize((150,150)) # Improves efficiency
         ar = np.asarray(im)
@@ -105,9 +136,17 @@ class ColourPalette:
     def colour_palette(self):
         ''' Returns current image's colour palette
         '''
+        if self.instagram:
+            self._from_instagram()
+
         codes, counts = self._clusterize()
         # Sorts all colours by appearance count
         codes = [k for k, v in sorted(zip(codes, counts), key=operator.itemgetter(1))][::-1]
         counts = np.sort(counts)[::-1]
             
         return codes, counts
+    
+    
+cp = ColourPalette(path='Z:/ciaraswalsh', num_clusters=6)
+codes, counts = cp.colour_palette()
+print(codes)

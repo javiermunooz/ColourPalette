@@ -61,6 +61,34 @@ codes, counts = cp.colour_palette()
 peak, colour = cp.most_common()
 ```
 
+_Since version v0.1.1 multi-picture analysis is supported. You can find a colour palette for set of pictures by specifying the path to a folder containing such images in the path parameter_
+
+```
+cp = ColourPalette(path='./mydir/', n_clusters=5)
+
+# Gets a N-colour palette
+codes, counts = cp.colour_palette()
+```
+
+_From version v0.2.0 you can also find the colour palette of any instagram profile. Set intagram=True and path parameter to the target handle_
+
+```
+cp = ColourPalette(path='handle', n_clusters=5, instagram=True, num_images=9)
+
+# Gets a N-colour palette
+codes, counts = cp.colour_palette()
+```
+
+_Please note this will only work for public profiles. If you want to work with private profiles, you will need to follow that account and add the user and password parameters to ColourPalette initializer._
+
+```
+cp = ColourPalette(path='handle', n_clusters=5, instagram=True, num_images=9, login='yourlogin', password='yourpass')
+
+# Gets a N-colour palette
+codes, counts = cp.colour_palette()
+```
+
+
 ### License 📄
 
 _This project was built under MIT license, which basically means do whatever you want but don't forget to credit the original author! A short @javiermunooz will do the trick._
