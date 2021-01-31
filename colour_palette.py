@@ -23,6 +23,7 @@ import imghdr
 from itertools import islice
 import operator
 import os
+import shutil
 
 import instaloader
 import numpy as np
@@ -63,8 +64,12 @@ class ColourPalette:
         # Adjusting the number of downloadable images
         post_iter = profile.get_posts()
         
-        # Downloading only [num_images] images
+        # Delete contents of ./tmp directory in case it exists
         self.path = "tmp"
+        if os.path.isdir('./tmp'):
+            shutil.rmtree('./tmp') 
+            
+        # Downloading only [num_images] images
         for post in islice(post_iter, self.num_images):
             L.download_post(post, "tmp")
         
