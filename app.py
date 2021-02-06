@@ -20,6 +20,7 @@
 
 from tkinter import Canvas
 from tkinter import filedialog
+from tkinter import simpledialog
 import tkinter as tk
 
 from PIL import ImageTk, Image
@@ -43,12 +44,12 @@ class MainApplication(object):
         self.panel = tk.Label(root, image = img)
         self.panel.image = img
         
-        self.panel.grid(row = 0, column = 0,  columnspan=3, rowspan=2, padx = 5, pady = 5) 
+        self.panel.grid(row = 0, column = 0,  columnspan=3, rowspan=3, padx = 5, pady = 5) 
         
         # Secondary label
         self.pal_label = tk.Label(root, text='Color Palette')
         
-        self.pal_label.grid(row=2, column=0, columnspan=3, sticky='EW')
+        self.pal_label.grid(row=3, column=0, columnspan=3, sticky='EW')
         
         # Colour Palette grid
         self.r1 = tk.Label(root, text='#ad261e', background='#ad261e', font=(None, -10))
@@ -58,19 +59,21 @@ class MainApplication(object):
         self.r5 = tk.Label(root, text='#c79437', background='#c79437', font=(None, -10))
         self.r6 = tk.Label(root, text='#1f232c', background='#1f232c', font=(None, -10))
         
-        self.r1.grid(row=3, column=0, sticky='EW')
-        self.r2.grid(row=3, column=1, sticky='EW')
-        self.r3.grid(row=3, column=2, sticky='EW')
-        self.r4.grid(row=4, column=0, sticky='EW')
-        self.r5.grid(row=4, column=1, sticky='EW')
-        self.r6.grid(row=4, column=2, sticky='EW')
+        self.r1.grid(row=4, column=0, sticky='EW')
+        self.r2.grid(row=4, column=1, sticky='EW')
+        self.r3.grid(row=4, column=2, sticky='EW')
+        self.r4.grid(row=5, column=0, sticky='EW')
+        self.r5.grid(row=5, column=1, sticky='EW')
+        self.r6.grid(row=5, column=2, sticky='EW')
         
         # Buttons
         self.greet_button = tk.Button(master, text="Load Image", command=self._process_img)
+        self.insta_button = tk.Button(master, text="Load Insta", command=self._process_insta)
         self.close_button = tk.Button(master, text="Close", command=master.quit)
         
         self.greet_button.grid(row = 0, column = 5, sticky = 'E') 
-        self.close_button.grid(row = 1, column = 5, sticky = 'E') 
+        self.insta_button.grid(row = 1, column = 5, sticky = 'E') 
+        self.close_button.grid(row = 2, column = 5, sticky = 'E') 
 
     def _to_tuple(self,a):
         ''' Converts an ndarray into a tuple of ints
@@ -85,10 +88,10 @@ class MainApplication(object):
         '''
         return "#%02x%02x%02x" % rgb
     
-    def _get_palette(self, filename):
+    def _get_palette(self, filename, instagram=False):
         ''' Finds the colour palette of a given picture
         '''
-        cp = ColourPalette(filename, 6)
+        cp = ColourPalette(filename, 6, instagram)
         codes = cp.colour_palette()[0]
         return codes
         
@@ -123,7 +126,23 @@ class MainApplication(object):
             objs[i].config(bg=code, text=code)
             i += 1
         
+    def _process_insta(self):
+        ''' Downloads the 5 latest images from a public instagram profile and finds their colour palette.
+        Modifies all 6 colour labels in the main GUI according to the colour palette.
+        '''
+        i = 0
+        handle = simpledialog.askstring("Input", "Enter your instagram handle", parent=root)
         
+        # Show colour palette
+        codes = self._get_palette(handle, instagram=True)
+        print(codes)
+        objs  = [self.r1, self.r2, self.r3, self.r4, self.r5, self.r6]
+        for code in codes:
+            code = code[:3]
+            code = self._from_rgb(self._to_tuple(code))
+            objs[i].config(bg=code, text=code)
+            i += 1
+            
     def _configure_gui(self):
         ''' Initial config
         '''
