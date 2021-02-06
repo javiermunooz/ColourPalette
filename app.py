@@ -24,7 +24,7 @@ from tkinter import filedialog
 from tkinter import simpledialog
 import tkinter as tk
 
-from PIL import ImageTk, Image
+from PIL import ImageTk, Image, ImageFont, ImageDraw
 
 from colour_palette import ColourPalette
 
@@ -145,11 +145,17 @@ class MainApplication(object):
                 code = self._from_rgb(self._to_tuple(code))
                 objs[i].config(bg=code, text=code)
                 i += 1
-                
-            random_image = os.path.join('tmp', random.choice(os.listdir('tmp'))).replace('\\','/')
-            # Display image
+            
+            # Selecting only jpg images (trying to avoid videos for the label object)
+            possible_imgs = [x for x in os.listdir('tmp') if x[-4:]=='.jpg']
+            random_image = os.path.join('tmp', random.choice(possible_imgs)).replace('\\','/')
+            title_font = ImageFont.truetype('font/static/PlayfairDisplay-Black.ttf', 25)
+            
+            # Display random image with handle on top
             self.img2 = Image.open(random_image)
             self.img2 = self.img2.resize((250, 250), Image.ANTIALIAS)
+            image_editable = ImageDraw.Draw(self.img2)
+            image_editable.text((15,15), '@'+handle, (237, 230, 211), font=title_font)
             self.img2 = ImageTk.PhotoImage(self.img2)
             self.panel.configure(image=self.img2)
             self.panel.image=self.img2
