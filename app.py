@@ -17,7 +17,8 @@
     3. Select a file from your machine. Might need to change the file type (bottom right).
     4. ¡You got your palette!
 '''
-
+import os
+import random
 from tkinter import Canvas
 from tkinter import filedialog
 from tkinter import simpledialog
@@ -133,6 +134,13 @@ class MainApplication(object):
         i = 0
         handle = simpledialog.askstring("Input", "Enter your instagram handle", parent=root)
         
+        # Display image
+        self.img2 = Image.open('./img/loading.gif')
+        self.img2 = self.img2.resize((250, 250), Image.ANTIALIAS)
+        self.img2 = ImageTk.PhotoImage(self.img2, format="gif -index 2")
+        self.panel.configure(image=self.img2)
+        self.panel.image=self.img2
+        
         # Show colour palette
         codes = self._get_palette(handle, instagram=True)
         print(codes)
@@ -142,6 +150,14 @@ class MainApplication(object):
             code = self._from_rgb(self._to_tuple(code))
             objs[i].config(bg=code, text=code)
             i += 1
+            
+        random_image = os.path.join('tmp', random.choice(os.listdir('tmp'))).replace('\\','/')
+        # Display image
+        self.img2 = Image.open(random_image)
+        self.img2 = self.img2.resize((250, 250), Image.ANTIALIAS)
+        self.img2 = ImageTk.PhotoImage(self.img2, format="gif -index 2")
+        self.panel.configure(image=self.img2)
+        self.panel.image=self.img2
             
     def _configure_gui(self):
         ''' Initial config
