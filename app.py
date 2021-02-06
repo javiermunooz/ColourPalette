@@ -110,22 +110,23 @@ class MainApplication(object):
         '''
         i = 0
         x = self._load_file()
-        
-        # Display image
-        self.img2 = Image.open(x)
-        self.img2 = self.img2.resize((250, 250), Image.ANTIALIAS)
-        self.img2 = ImageTk.PhotoImage(self.img2)
-        self.panel.configure(image=self.img2)
-        self.panel.image=self.img2
-        
-        # Show colour palette
-        codes = self._get_palette(x)
-        objs  = [self.r1, self.r2, self.r3, self.r4, self.r5, self.r6]
-        for code in codes:
-            code = code[:3]
-            code = self._from_rgb(self._to_tuple(code))
-            objs[i].config(bg=code, text=code)
-            i += 1
+
+        if x is not '':
+            # Display image
+            self.img2 = Image.open(x)
+            self.img2 = self.img2.resize((250, 250), Image.ANTIALIAS)
+            self.img2 = ImageTk.PhotoImage(self.img2)
+            self.panel.configure(image=self.img2)
+            self.panel.image=self.img2
+            
+            # Show colour palette
+            codes = self._get_palette(x)
+            objs  = [self.r1, self.r2, self.r3, self.r4, self.r5, self.r6]
+            for code in codes:
+                code = code[:3]
+                code = self._from_rgb(self._to_tuple(code))
+                objs[i].config(bg=code, text=code)
+                i += 1
         
     def _process_insta(self):
         ''' Downloads the 5 latest images from a public instagram profile and finds their colour palette.
@@ -134,30 +135,24 @@ class MainApplication(object):
         i = 0
         handle = simpledialog.askstring("Input", "Enter your instagram handle", parent=root)
         
-        # Display image
-        self.img2 = Image.open('./img/loading.gif')
-        self.img2 = self.img2.resize((250, 250), Image.ANTIALIAS)
-        self.img2 = ImageTk.PhotoImage(self.img2, format="gif -index 2")
-        self.panel.configure(image=self.img2)
-        self.panel.image=self.img2
-        
-        # Show colour palette
-        codes = self._get_palette(handle, instagram=True)
-        print(codes)
-        objs  = [self.r1, self.r2, self.r3, self.r4, self.r5, self.r6]
-        for code in codes:
-            code = code[:3]
-            code = self._from_rgb(self._to_tuple(code))
-            objs[i].config(bg=code, text=code)
-            i += 1
-            
-        random_image = os.path.join('tmp', random.choice(os.listdir('tmp'))).replace('\\','/')
-        # Display image
-        self.img2 = Image.open(random_image)
-        self.img2 = self.img2.resize((250, 250), Image.ANTIALIAS)
-        self.img2 = ImageTk.PhotoImage(self.img2, format="gif -index 2")
-        self.panel.configure(image=self.img2)
-        self.panel.image=self.img2
+        if handle is not None:       
+            # Show colour palette
+            codes = self._get_palette(handle, instagram=True)
+            print(codes)
+            objs  = [self.r1, self.r2, self.r3, self.r4, self.r5, self.r6]
+            for code in codes:
+                code = code[:3]
+                code = self._from_rgb(self._to_tuple(code))
+                objs[i].config(bg=code, text=code)
+                i += 1
+                
+            random_image = os.path.join('tmp', random.choice(os.listdir('tmp'))).replace('\\','/')
+            # Display image
+            self.img2 = Image.open(random_image)
+            self.img2 = self.img2.resize((250, 250), Image.ANTIALIAS)
+            self.img2 = ImageTk.PhotoImage(self.img2)
+            self.panel.configure(image=self.img2)
+            self.panel.image=self.img2
             
     def _configure_gui(self):
         ''' Initial config
