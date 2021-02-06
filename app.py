@@ -138,7 +138,6 @@ class MainApplication(object):
         if handle is not None:       
             # Show colour palette
             codes = self._get_palette(handle, instagram=True)
-            print(codes)
             objs  = [self.r1, self.r2, self.r3, self.r4, self.r5, self.r6]
             for code in codes:
                 code = code[:3]
