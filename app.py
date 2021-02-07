@@ -48,7 +48,7 @@ class MainApplication(object):
         self.panel.grid(row = 0, column = 0,  columnspan=3, rowspan=3, padx = 5, pady = 5) 
         
         # Secondary label
-        self.pal_label = tk.Label(root, text='Color Palette')
+        self.pal_label = tk.Label(root, text='Color Palette', bg='#feeae6')
         
         self.pal_label.grid(row=3, column=0, columnspan=3, sticky='EW')
         
@@ -68,9 +68,9 @@ class MainApplication(object):
         self.r6.grid(row=5, column=2, sticky='EW')
         
         # Buttons
-        self.greet_button = tk.Button(master, text="Load Image", command=self._process_img, width=10)
-        self.insta_button = tk.Button(master, text="Load Insta", command=self._process_insta, width=10)
-        self.close_button = tk.Button(master, text="Close", command=master.quit, width=10)
+        self.greet_button = tk.Button(master, text="Load Image", command=self._process_img, width=10, bg='#fedbd0', relief='ridge')
+        self.insta_button = tk.Button(master, text="Load Insta", command=self._process_insta, width=10, bg='#fedbd0', relief='ridge')
+        self.close_button = tk.Button(master, text="Close", command=master.quit, width=10, bg='#fedbd0', relief='ridge')
         
         self.greet_button.grid(row = 0, column = 5, sticky = 'E') 
         self.insta_button.grid(row = 1, column = 5, sticky = 'E') 
@@ -163,6 +163,7 @@ class MainApplication(object):
         ''' Initial config
         '''
         self.master.title("Colour Palette")
+        self.master.configure(background='#feeae6')
         self.master.geometry("400x400")
         self.master.resizable(True, True)
         
