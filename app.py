@@ -68,9 +68,9 @@ class MainApplication(object):
         self.r6.grid(row=5, column=2, sticky='EW')
         
         # Buttons
-        self.greet_button = tk.Button(master, text="Load Image", command=self._process_img)
-        self.insta_button = tk.Button(master, text="Load Insta", command=self._process_insta)
-        self.close_button = tk.Button(master, text="Close", command=master.quit)
+        self.greet_button = tk.Button(master, text="Load Image", command=self._process_img, width=10)
+        self.insta_button = tk.Button(master, text="Load Insta", command=self._process_insta, width=10)
+        self.close_button = tk.Button(master, text="Close", command=master.quit, width=10)
         
         self.greet_button.grid(row = 0, column = 5, sticky = 'E') 
         self.insta_button.grid(row = 1, column = 5, sticky = 'E') 
