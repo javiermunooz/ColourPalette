@@ -53,12 +53,12 @@ class MainApplication(object):
         self.pal_label.grid(row=3, column=0, columnspan=3, sticky='EW')
         
         # Colour Palette grid
-        self.r1 = tk.Label(root, text='#ad261e', background='#ad261e', font=(None, -10))
-        self.r2 = tk.Label(root, text='#09b2d2', background='#09b2d2', font=(None, -10))
-        self.r3 = tk.Label(root, text='#1a73cd', background='#1a73cd', font=(None, -10))
-        self.r4 = tk.Label(root, text='#fcfdfc', background='#fcfdfc', font=(None, -10))
-        self.r5 = tk.Label(root, text='#c79437', background='#c79437', font=(None, -10))
-        self.r6 = tk.Label(root, text='#1f232c', background='#1f232c', font=(None, -10))
+        self.r1 = tk.Label(root, text='#ad261e', background='#ad261e', font=(None, -10), state='normal')
+        self.r2 = tk.Label(root, text='#09b2d2', background='#09b2d2', font=(None, -10), state='normal')
+        self.r3 = tk.Label(root, text='#1a73cd', background='#1a73cd', font=(None, -10), state='normal')
+        self.r4 = tk.Label(root, text='#fcfdfc', background='#fcfdfc', font=(None, -10), state='normal')
+        self.r5 = tk.Label(root, text='#c79437', background='#c79437', font=(None, -10), state='normal')
+        self.r6 = tk.Label(root, text='#1f232c', background='#1f232c', font=(None, -10), state='normal')
         
         self.r1.grid(row=4, column=0, sticky='EW')
         self.r2.grid(row=4, column=1, sticky='EW')
